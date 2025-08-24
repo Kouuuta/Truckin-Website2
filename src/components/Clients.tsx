@@ -1,8 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useRef, useEffect, useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Clients = () => {
+  const { isDarkMode } = useTheme();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -67,7 +69,9 @@ const Clients = () => {
 
   return (
     <section
-      className="py-32 px-6 md:px-12 bg-black overflow-hidden"
+      className={`py-32 px-6 md:px-12 overflow-hidden transition-colors duration-300 ${
+        isDarkMode ? "bg-black" : "bg-white"
+      }`}
       id="clients"
       ref={containerRef}
     >
@@ -97,7 +101,11 @@ const Clients = () => {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center px-4 py-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10 mb-8"
+              className={`inline-flex items-center px-4 py-2 backdrop-blur-md rounded-full mb-8 transition-colors duration-300 ${
+                isDarkMode
+                  ? "bg-black/40 border border-white/10"
+                  : "bg-white/40 border border-gray-200/20"
+              }`}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={
                 headerInView
@@ -111,14 +119,22 @@ const Clients = () => {
               </span>
             </motion.div>
 
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-tight tracking-tight mb-6">
+            <h2
+              className={`text-5xl md:text-6xl lg:text-7xl font-serif leading-tight tracking-tight mb-6 transition-colors duration-300 ${
+                isDarkMode ? "text-white" : "text-black"
+              }`}
+            >
               <span className="font-light">Our</span>{" "}
               <span className="font-light text-[#4ecca3] italic">Clients</span>
             </h2>
 
             <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#4ecca3] to-transparent mx-auto mb-8" />
 
-            <p className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto font-sans-serif">
+            <p
+              className={`text-lg leading-relaxed max-w-2xl mx-auto font-sans-serif transition-colors duration-300 ${
+                isDarkMode ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               Marcas que confían en nuestra experiencia para alcanzar resultados
               extraordinarios
             </p>
@@ -135,8 +151,20 @@ const Clients = () => {
           {/* Carousel Container */}
           <div className="relative overflow-hidden">
             {/* Gradient Masks */}
-            <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-black to-transparent z-10" />
-            <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-black to-transparent z-10" />
+            <div
+              className={`absolute left-0 top-0 w-20 h-full z-10 transition-colors duration-300 ${
+                isDarkMode
+                  ? "bg-gradient-to-r from-black to-transparent"
+                  : "bg-gradient-to-r from-white to-transparent"
+              }`}
+            />
+            <div
+              className={`absolute right-0 top-0 w-20 h-full z-10 transition-colors duration-300 ${
+                isDarkMode
+                  ? "bg-gradient-to-l from-black to-transparent"
+                  : "bg-gradient-to-l from-white to-transparent"
+              }`}
+            />
 
             {/* Scrollable Container */}
             <div
@@ -155,7 +183,13 @@ const Clients = () => {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="relative h-full bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm rounded-3xl border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
+                  <div
+                    className={`relative h-full backdrop-blur-sm rounded-3xl transition-all duration-500 overflow-hidden ${
+                      isDarkMode
+                        ? "bg-gradient-to-br from-gray-900/50 to-black/50 border border-white/10 hover:border-white/20"
+                        : "bg-gradient-to-br from-gray-100/50 to-white/50 border border-gray-200/20 hover:border-gray-300/40"
+                    }`}
+                  >
                     {/* Subtle glow effect */}
                     <div className="absolute inset-0 bg-gradient-to-br from-[#4ecca3]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -169,7 +203,11 @@ const Clients = () => {
                       </div>
 
                       {/* Client Name */}
-                      <h3 className="text-xl font-medium text-white mb-4 text-center">
+                      <h3
+                        className={`text-xl font-medium mb-4 text-center transition-colors duration-300 ${
+                          isDarkMode ? "text-white" : "text-black"
+                        }`}
+                      >
                         {client.name}
                       </h3>
 
@@ -190,7 +228,11 @@ const Clients = () => {
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index === currentIndex % clients.length
                     ? "bg-[#4ecca3] scale-125"
-                    : "bg-gray-600 hover:bg-gray-500"
+                    : `${
+                        isDarkMode
+                          ? "bg-gray-600 hover:bg-gray-500"
+                          : "bg-gray-400 hover:bg-gray-500"
+                      }`
                 }`}
                 whileHover={{ scale: 1.2 }}
               />
@@ -214,7 +256,13 @@ const Clients = () => {
               <div className="text-3xl font-light text-[#4ecca3] mb-2">
                 {stat.number}
               </div>
-              <div className="text-gray-400 text-sm">{stat.label}</div>
+              <div
+                className={`text-sm transition-colors duration-300 ${
+                  isDarkMode ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                {stat.label}
+              </div>
             </div>
           ))}
         </motion.div>

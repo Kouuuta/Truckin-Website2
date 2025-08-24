@@ -4,6 +4,18 @@
 @import 'tailwindcss/utilities';
 /* DO NOT DELETE THESE TAILWIND IMPORTS, OTHERWISE THE STYLING WILL NOT RENDER AT ALL */
 
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+:root.light {
+  color-scheme: light;
+}
+
 @keyframes scroll {
   0% {
     transform: translateX(0);
@@ -21,7 +33,36 @@
   animation-play-state: paused;
 }
 
-/* Optional: Add body padding to account for fixed TopBar and Navbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+
 body {
-  padding-top: 0px; /* Adjust based on your needs */
+  padding-top: 0px; 
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button, a, input, textarea, select {
+  transition: all 0.3s ease;
+}
+
+:focus {
+  outline: 2px solid #4ecca3;
+  outline-offset: 2px;
+}
+
+
+::selection {
+  background-color: #4ecca3;
+  color: #000;
 }

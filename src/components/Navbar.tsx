@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScroll, setLastScroll] = useState(0);
   const [menu, setMenu] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,38 +29,27 @@ const Navbar = () => {
       }
     };
 
-    if (localStorage.getItem("darkMode") === "true") {
-      setDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
 
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem("darkMode", newDarkMode.toString());
-    document.documentElement.classList.toggle("dark");
+  // Smooth scroll function
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   const navItems = [
-    { title: "Skills" },
-    { title: "Projects" },
-    {
-      title: "About",
-      dropdown: [
-        {
-          title: "About us",
-          description: "An award winning agency in Manchester",
-        },
-        { title: "Meet the Team", description: "Putting faces to names" },
-        { title: "Culture", description: "How we do things around here" },
-        { title: "Testimonials", description: "What our clients say about us" },
-      ],
-    },
-    { title: "Contact" },
+    { title: "Home", href: "#home" },
+    { title: "About Us", href: "#about" },
+    { title: "Clients", href: "#clients" },
+    { title: "Team", href: "#team" },
+    { title: "Contacts", href: "#contact" },
   ];
 
   return (
@@ -83,16 +73,24 @@ const Navbar = () => {
         <motion.div
           className={`relative flex items-center justify-between h-16 transition-all duration-700 ease-out ${
             scrolled
-              ? "bg-black/80 backdrop-blur-xl rounded-full px-6 shadow-2xl border border-white/10"
+              ? `${
+                  isDarkMode
+                    ? "bg-black/80 backdrop-blur-xl border border-white/10"
+                    : "bg-white/80 backdrop-blur-xl border border-gray-200"
+                } rounded-full px-6 shadow-2xl`
               : "bg-transparent px-6"
-          } ${darkMode ? "text-white" : "text-gray-800"}`}
+          }`}
           layout
         >
           {/* Logo */}
           <motion.div className="flex-shrink-0 z-10" layout>
             <a href="/" className="transition-colors duration-300">
               <span className="sr-only">Shape Logo</span>
-              <div className="text-2xl font-bold">
+              <div
+                className={`text-2xl font-bold transition-colors duration-300 ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
+              >
                 YK<span className="text-[#4ecca3]">.</span>
               </div>
             </a>
@@ -102,68 +100,16 @@ const Navbar = () => {
           <motion.nav className="hidden lg:flex items-center space-x-8" layout>
             {navItems.map((item, index) => (
               <div key={index} className="relative">
-                {item.badge && (
-                  <motion.div
-                    className="absolute -top-2 -right-3 bg-[#4ecca3] text-black text-xs rounded-full px-2 py-0.5 font-medium z-20"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                  >
-                    {item.badge}
-                  </motion.div>
-                )}
-
-                <motion.a
-                  href={`/${item.title.toLowerCase()}`}
-                  className={`relative font-medium transition-colors duration-300 hover:text-[#4ecca3] ${
-                    darkMode
-                      ? "text-white hover:text-[#4ecca3]"
-                      : "text-gray-700 hover:text-[#4ecca3]"
+                <motion.button
+                  onClick={() => scrollToSection(item.href)}
+                  className={`relative font-medium transition-colors duration-300 hover:text-[#4ecca3] cursor-pointer ${
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
-                  onMouseEnter={() =>
-                    setActiveDropdown(item.dropdown ? index : null)
-                  }
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   {item.title}
-                </motion.a>
-
-                {/* Dropdown Menu */}
-                <AnimatePresence>
-                  {item.dropdown && activeDropdown === index && (
-                    <motion.div
-                      className="absolute top-full left-1/2 transform -translate-x-1/2 pt-4 z-50"
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                    >
-                      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6 min-w-[300px] border border-gray-100 dark:border-gray-800">
-                        <div className="w-3 h-3 bg-white dark:bg-gray-900 absolute -top-1.5 left-1/2 transform -translate-x-1/2 rotate-45 border-l border-t border-gray-100 dark:border-gray-800" />
-                        {item.dropdown.map((dropdownItem, idx) => (
-                          <motion.a
-                            key={idx}
-                            href={`/${dropdownItem.title
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}`}
-                            className="block p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                          >
-                            <div className="font-semibold text-gray-900 dark:text-white group-hover:text-[#4ecca3] transition-colors">
-                              {dropdownItem.title}
-                            </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                              {dropdownItem.description}
-                            </div>
-                          </motion.a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                </motion.button>
               </div>
             ))}
           </motion.nav>
@@ -172,16 +118,16 @@ const Navbar = () => {
           <motion.div className="flex items-center space-x-3 z-10" layout>
             {/* Dark mode toggle */}
             <motion.button
-              onClick={toggleDarkMode}
+              onClick={toggleTheme}
               className={`p-2 rounded-full transition-colors duration-300 ${
-                darkMode
+                isDarkMode
                   ? "text-yellow-400 hover:bg-white/10"
                   : "text-gray-600 hover:bg-gray-100"
               }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              {darkMode ? (
+              {isDarkMode ? (
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -207,7 +153,9 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <motion.button
               onClick={() => setMenu(!menu)}
-              className="lg:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+              className={`lg:hidden p-2 rounded-full transition-colors ${
+                isDarkMode ? "hover:bg-white/10" : "hover:bg-gray-100"
+              }`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -243,18 +191,22 @@ const Navbar = () => {
       <AnimatePresence>
         {menu && (
           <motion.div
-            className={`lg:hidden absolute top-full left-0 w-full mt-2 px-4`}
+            className="lg:hidden absolute top-full left-0 w-full mt-2 px-4"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <div
-              className={`rounded-2xl p-6 ${
+              className={`rounded-2xl p-6 shadow-2xl ${
                 scrolled
-                  ? "bg-black/90 backdrop-blur-xl border border-white/10"
-                  : "bg-white dark:bg-gray-900"
-              } shadow-2xl`}
+                  ? `${
+                      isDarkMode
+                        ? "bg-black/90 backdrop-blur-xl border border-white/10"
+                        : "bg-white/90 backdrop-blur-xl border border-gray-200"
+                    }`
+                  : `${isDarkMode ? "bg-gray-900" : "bg-white"}`
+              } transition-colors duration-300`}
             >
               <nav className="space-y-4">
                 {navItems.map((item, index) => (
@@ -264,22 +216,17 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <a
-                      href={`/${item.title.toLowerCase()}`}
-                      className={`block text-xl font-medium py-2 transition-colors ${
-                        darkMode
-                          ? "text-white hover:text-[#4ecca3]"
-                          : "text-gray-900 hover:text-[#4ecca3]"
+                    <button
+                      onClick={() => {
+                        scrollToSection(item.href);
+                        setMenu(false);
+                      }}
+                      className={`block text-xl font-medium py-2 transition-colors hover:text-[#4ecca3] cursor-pointer text-left ${
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
-                      onClick={() => setMenu(false)}
                     >
                       {item.title}
-                      {item.badge && (
-                        <span className="ml-3 text-sm bg-[#4ecca3] text-black px-2 py-1 rounded-full">
-                          {item.badge}
-                        </span>
-                      )}
-                    </a>
+                    </button>
                   </motion.div>
                 ))}
                 <motion.div
@@ -288,12 +235,14 @@ const Navbar = () => {
                   transition={{ delay: navItems.length * 0.1 }}
                   className="pt-4"
                 >
-                  <a
-                    href="/start-project"
+                  <button
+                    onClick={() => {
+                      scrollToSection("#contact");
+                      setMenu(false);
+                    }}
                     className="inline-flex items-center px-6 py-3 bg-[#4ecca3] text-black rounded-full font-semibold"
-                    onClick={() => setMenu(false)}
                   >
-                    Start a project
+                    Get in Touch
                     <svg
                       className="w-4 h-4 ml-2"
                       fill="none"
@@ -307,7 +256,7 @@ const Navbar = () => {
                         d="M17 8l4 4m0 0l-4 4m4-4H3"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </motion.div>
               </nav>
             </div>

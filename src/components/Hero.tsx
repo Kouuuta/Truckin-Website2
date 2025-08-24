@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Hero = () => {
+  const { isDarkMode } = useTheme();
   const controls = useAnimation();
   const [scrollY, setScrollY] = useState(0);
   const [ref, inView] = useInView({
@@ -26,7 +28,14 @@ const Hero = () => {
 
   return (
     <>
-      <section className="min-h-screen flex items-center justify-center px-6 md:px-12 pt-20 relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
+      <section
+        id="home"
+        className={`min-h-screen flex items-center justify-center px-6 md:px-12 pt-20 relative overflow-hidden transition-colors duration-300 ${
+          isDarkMode
+            ? "bg-gradient-to-br from-gray-900 via-black to-gray-800"
+            : "bg-gradient-to-br from-gray-100 via-white to-gray-50"
+        }`}
+      >
         {/* Subtle animated glow effects */}
         <div className="absolute inset-0 -z-10">
           {/* Main gradient overlay */}
@@ -46,7 +55,6 @@ const Hero = () => {
             }}
           />
 
-          {/* Secondary glow */}
           <motion.div
             className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-[#4ecca3]/6 blur-2xl"
             animate={{
@@ -62,15 +70,19 @@ const Hero = () => {
           />
         </div>
 
-        {/* Fade overlay that increases opacity as user scrolls */}
         <div
-          className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-100"
+          className={`absolute inset-0 pointer-events-none transition-opacity duration-100 ${
+            isDarkMode ? "bg-black" : "bg-white"
+          }`}
           style={{ opacity: 1 - fadeOpacity }}
         />
 
-        {/* Bottom fade gradient that becomes more prominent on scroll */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none"
+          className={`absolute bottom-0 left-0 right-0 h-32 pointer-events-none ${
+            isDarkMode
+              ? "bg-gradient-to-t from-black to-transparent"
+              : "bg-gradient-to-t from-white to-transparent"
+          }`}
           style={{ opacity: Math.min(1, 0.3 + (1 - fadeOpacity) * 0.7) }}
         />
 
@@ -89,10 +101,18 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="mb-8"
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium text-white leading-tight tracking-tight">
+            <h1
+              className={`text-5xl md:text-6xl lg:text-7xl font-medium leading-tight tracking-tight transition-colors duration-300 ${
+                isDarkMode ? "text-white" : "text-black"
+              }`}
+            >
               <span className="font-medium">Welcome to BIG C</span>
               <br />
-              <span className="font-serif text-[#fcfcfa]">
+              <span
+                className={`font-serif transition-colors duration-300 ${
+                  isDarkMode ? "text-[#fcfcfa]" : "text-gray-800"
+                }`}
+              >
                 Truckin Services
               </span>
             </h1>
@@ -109,7 +129,11 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-12"
           >
-            <p className="text-xl md:text-2xl font-sans-serif text-gray-400 leading-relaxed tracking-tight max-w-4xl mx-auto">
+            <p
+              className={`text-xl md:text-2xl font-sans-serif leading-relaxed tracking-tight max-w-4xl mx-auto transition-colors duration-300 ${
+                isDarkMode ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               Una agencia de performance enfocada en aumentar tus ventas y
               mejorar tu margen de contribución
             </p>
@@ -142,16 +166,26 @@ const Hero = () => {
             </motion.a>
 
             {/* Secondary button */}
-            <motion.a
-              href="#results"
-              className="px-8 py-4 bg-gray-800/60 text-white font-medium rounded-xl
-                       shadow-lg backdrop-blur-sm border border-gray-700/50
-                       hover:bg-gray-700/60 transition-all duration-300"
+            <motion.button
+              onClick={() => {
+                const element = document.querySelector("#about");
+                if (element) {
+                  element.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              }}
+              className={`px-8 py-4 font-medium rounded-xl shadow-lg backdrop-blur-sm transition-all duration-300 cursor-pointer ${
+                isDarkMode
+                  ? "bg-gray-800/60 text-white border border-gray-700/50 hover:bg-gray-700/60"
+                  : "bg-gray-100/60 text-black border border-gray-300/50 hover:bg-gray-200/60"
+              }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <h6 className="font-medium tracking-tight">Ver Portafolio</h6>
-            </motion.a>
+            </motion.button>
           </motion.div>
         </div>
 
@@ -175,7 +209,9 @@ const Hero = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-gray-400"
+            className={`transition-colors duration-300 ${
+              isDarkMode ? "text-gray-400" : "text-gray-600"
+            }`}
           >
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>

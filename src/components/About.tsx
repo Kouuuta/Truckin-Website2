@@ -1,9 +1,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useRef } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 import AnimatedText from "./AnimatedText";
 
 const About = () => {
+  const { isDarkMode } = useTheme();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -32,7 +34,9 @@ const About = () => {
 
   return (
     <section
-      className="relative py-32 px-6 md:px-12 bg-black overflow-hidden"
+      className={`relative py-32 px-6 md:px-12 overflow-hidden transition-colors duration-300 ${
+        isDarkMode ? "bg-black" : "bg-white"
+      }`}
       id="about"
       ref={containerRef}
     >
@@ -79,14 +83,22 @@ const About = () => {
               Learn about our company
             </motion.span>
 
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-tight tracking-tight mb-6">
+            <h2
+              className={`text-5xl md:text-6xl lg:text-7xl font-serif leading-tight tracking-tight mb-6 transition-colors duration-300 ${
+                isDarkMode ? "text-white" : "text-black"
+              }`}
+            >
               <span className="font-light">About</span>{" "}
               <span className="font-light text-[#4ecca3] italic">Us</span>
             </h2>
 
             <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#4ecca3] to-transparent mx-auto mb-8" />
 
-            <p className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto font-sans-serif">
+            <p
+              className={`text-lg leading-relaxed max-w-2xl mx-auto font-sans-serif transition-colors duration-300 ${
+                isDarkMode ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               We transform data into extraordinary results
             </p>
           </motion.div>
@@ -119,7 +131,13 @@ const About = () => {
               }}
             />
 
-            <div className="relative bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm rounded-3xl p-8 border border-white/5">
+            <div
+              className={`relative backdrop-blur-sm rounded-3xl p-8 transition-colors duration-300 ${
+                isDarkMode
+                  ? "bg-gradient-to-br from-gray-900/50 to-black/50 border border-white/5"
+                  : "bg-gradient-to-br from-gray-100/50 to-white/50 border border-gray-200/20"
+              }`}
+            >
               <img
                 src="/bigc_logo.png"
                 alt="BIG C Truckin Services"
@@ -139,7 +157,13 @@ const About = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-[#4ecca3]/10 to-blue-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500 opacity-50" />
 
-              <div className="relative bg-black/60 backdrop-blur-xl rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-500">
+              <div
+                className={`relative backdrop-blur-xl rounded-2xl p-8 transition-all duration-500 ${
+                  isDarkMode
+                    ? "bg-black/60 border border-white/10 hover:border-white/20"
+                    : "bg-white/60 border border-gray-200/30 hover:border-gray-300/50"
+                }`}
+              >
                 {/* Subtle rotating gradient */}
                 <motion.div
                   className="absolute top-4 right-4 w-16 h-16 rounded-full opacity-30"
@@ -162,10 +186,18 @@ const About = () => {
                     animate={{ opacity: [0.7, 1, 0.7] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   ></motion.div>
-                  <h3 className="text-xl font-medium text-white mb-3">
+                  <h3
+                    className={`text-xl font-medium mb-3 transition-colors duration-300 ${
+                      isDarkMode ? "text-white" : "text-black"
+                    }`}
+                  >
                     ROI Promedio
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p
+                    className={`text-sm leading-relaxed transition-colors duration-300 ${
+                      isDarkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Incremento comprobado en campañas de performance marketing
                   </p>
                 </div>
@@ -185,12 +217,18 @@ const About = () => {
                 </span>
                 <AnimatedText
                   text="Data-Driven Performance"
-                  className="text-3xl md:text-4xl font-light text-white mb-6"
+                  className={`text-3xl md:text-4xl font-light mb-6 transition-colors duration-300 ${
+                    isDarkMode ? "text-white" : "text-black"
+                  }`}
                   once={false}
                 />
               </div>
 
-              <div className="space-y-4 text-gray-300 leading-relaxed">
+              <div
+                className={`space-y-4 leading-relaxed transition-colors duration-300 ${
+                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
                 <p className="font-light">
                   Combinamos análisis profundo con creatividad estratégica para
                   <span className="text-[#4ecca3] font-medium">
@@ -202,7 +240,11 @@ const About = () => {
 
                 <p className="font-light">
                   Desde adquisición hasta retención, transformamos insights en
-                  <span className="text-white font-medium">
+                  <span
+                    className={`font-medium transition-colors duration-300 ${
+                      isDarkMode ? "text-white" : "text-black"
+                    }`}
+                  >
                     {" "}
                     resultados medibles y sostenibles
                   </span>
@@ -215,7 +257,13 @@ const About = () => {
       </div>
 
       {/* Subtle bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent" />
+      <div
+        className={`absolute bottom-0 left-0 right-0 h-32 transition-colors duration-300 ${
+          isDarkMode
+            ? "bg-gradient-to-t from-black via-black/50 to-transparent"
+            : "bg-gradient-to-t from-white via-white/50 to-transparent"
+        }`}
+      />
     </section>
   );
 };
