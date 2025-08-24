@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Clients from "./components/Clients";
 import Team from "./components/Team";
+import Contacts from "./components/Contacts";
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
           <About />
           <Clients />
           <Team />
+          <Contacts />
         </main>
       </div>
     </ThemeProvider>

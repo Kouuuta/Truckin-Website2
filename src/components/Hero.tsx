@@ -33,7 +33,7 @@ const Hero = () => {
         className={`min-h-screen flex items-center justify-center px-6 md:px-12 pt-20 relative overflow-hidden transition-colors duration-300 ${
           isDarkMode
             ? "bg-gradient-to-br from-gray-900 via-black to-gray-800"
-            : "bg-gradient-to-br from-gray-100 via-white to-gray-50"
+            : "bg-gradient-to-br from-zinc-300 via-white to-zinc-200"
         }`}
       >
         {/* Subtle animated glow effects */}
