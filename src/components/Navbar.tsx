@@ -85,13 +85,13 @@ const Navbar = () => {
           {/* Logo */}
           <motion.div className="flex-shrink-0 z-10" layout>
             <a href="/" className="transition-colors duration-300">
-              <span className="sr-only">Shape Logo</span>
-              <div
-                className={`text-2xl font-bold transition-colors duration-300 ${
-                  isDarkMode ? "text-white" : "text-black"
-                }`}
-              >
-                YK<span className="text-[#4ecca3]">.</span>
+              <span className="sr-only">BIG C Truckin Services Logo</span>
+              <div className="w-10 h-10 flex items-center">
+                <img
+                  src="/bigc_logo.png"
+                  alt="BIG C Truckin Services"
+                  className="w-full h-full object-contain filter brightness-110 transition-all duration-300 hover:scale-105"
+                />
               </div>
             </a>
           </motion.div>

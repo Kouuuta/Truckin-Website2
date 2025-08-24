@@ -23,14 +23,22 @@ const Clients = () => {
   const scrollContainerRef = useRef(null);
 
   const clients = [
-    { id: 1, name: "Client 1", image: "/placeholder-logo-1.png" },
-    { id: 2, name: "Client 2", image: "/placeholder-logo-2.png" },
-    { id: 3, name: "Client 3", image: "/placeholder-logo-3.png" },
-    { id: 4, name: "Client 4", image: "/placeholder-logo-4.png" },
-    { id: 5, name: "Client 5", image: "/placeholder-logo-5.png" },
-    { id: 6, name: "Client 6", image: "/placeholder-logo-6.png" },
-    { id: 7, name: "Client 7", image: "/placeholder-logo-7.png" },
-    { id: 8, name: "Client 8", image: "/placeholder-logo-8.png" },
+    {
+      id: 1,
+      name: "Shakeys",
+      image: "/Shakeys.webp",
+    },
+    {
+      id: 2,
+      name: "Jollibee",
+      image: "Jollibee.png",
+    },
+    {
+      id: 3,
+      name: "McDonalds",
+      image: "McDonalds.png",
+    },
+    { id: 4, name: "H&M", image: "H&M.png" },
   ];
 
   const duplicatedClients = [...clients, ...clients, ...clients];
@@ -115,7 +123,7 @@ const Clients = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <span className="text-[#4ecca3] text-sm font-medium tracking-wide">
-                Nuestros Clientes
+                CLIENTS
               </span>
             </motion.div>
 
@@ -135,8 +143,8 @@ const Clients = () => {
                 isDarkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Marcas que confían en nuestra experiencia para alcanzar resultados
-              extraordinarios
+              Trusted by businesses who rely on our services to achieve
+              consistent and measurable results
             </p>
           </motion.div>
         </motion.div>
@@ -248,9 +256,9 @@ const Clients = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           {[
-            { number: "50+", label: "Clientes Activos" },
-            { number: "200%", label: "ROI Promedio" },
-            { number: "24/7", label: "Soporte Dedicado" },
+            { number: "50+", label: "Active Clients" },
+            { number: "95%", label: "On-time Delivery Rate" },
+            { number: "24/7", label: "Dedicated Support" },
           ].map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-3xl font-light text-[#4ecca3] mb-2">

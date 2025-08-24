@@ -99,7 +99,8 @@ const About = () => {
                 isDarkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              We transform data into extraordinary results
+              Driving businesses forward with reliable trucking and logistics
+              solutions
             </p>
           </motion.div>
         </motion.div>
@@ -191,14 +192,26 @@ const About = () => {
                       isDarkMode ? "text-white" : "text-black"
                     }`}
                   >
-                    ROI Promedio
+                    BIG C Truckin Services
                   </h3>
                   <p
-                    className={`text-sm leading-relaxed transition-colors duration-300 ${
+                    className={`text-sm leading-relaxed transition-colors duration-300 text-justify ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    Incremento comprobado en campañas de performance marketing
+                    A trusted logistics and transportation partner dedicated to
+                    delivering dependable, efficient, and scalable trucking
+                    solutions. We focus on simplifying logistics so businesses
+                    can operate with confidence and peace of mind. Our services
+                    are built around reliability and performance—ensuring every
+                    delivery is on time, every mile is cost-effective, and every
+                    client’s unique needs are met. Whether it’s long-haul
+                    trucking, local distribution, or specialized logistics
+                    support, we tailor our solutions to maximize efficiency.We
+                    believe in building long-term partnerships through trust,
+                    transparency, and excellence. With a data-driven approach
+                    and a dedicated team, we transform logistics challenges into
+                    sustainable results that keep businesses moving forward
                   </p>
                 </div>
               </div>
@@ -213,43 +226,47 @@ const About = () => {
             >
               <div>
                 <span className="text-[#4ecca3] text-sm font-medium tracking-wider uppercase mb-3 block">
-                  Nuestra Filosofía
+                  our mission
                 </span>
-                <AnimatedText
-                  text="Data-Driven Performance"
-                  className={`text-3xl md:text-4xl font-light mb-6 transition-colors duration-300 ${
-                    isDarkMode ? "text-white" : "text-black"
-                  }`}
-                  once={false}
-                />
               </div>
-
               <div
                 className={`space-y-4 leading-relaxed transition-colors duration-300 ${
                   isDarkMode ? "text-gray-300" : "text-gray-700"
                 }`}
               >
                 <p className="font-light">
-                  Combinamos análisis profundo con creatividad estratégica para
+                  To provide safe, reliable, and efficient trucking services
+                  that empower businesses
                   <span className="text-[#4ecca3] font-medium">
                     {" "}
-                    maximizar cada inversión publicitaria
+                    to grow and succeed
                   </span>
                   .
                 </p>
-
+                <div>
+                  <span className="text-[#4ecca3] text-sm font-medium tracking-wider uppercase mb-3 block">
+                    our vision
+                  </span>
+                </div>
                 <p className="font-light">
-                  Desde adquisición hasta retención, transformamos insights en
-                  <span
-                    className={`font-medium transition-colors duration-300 ${
-                      isDarkMode ? "text-white" : "text-black"
-                    }`}
-                  >
+                  To be the most trusted logistics partner, recognized for
+                  delivering
+                  <span className="text-[#4ecca3] font-medium">
                     {" "}
-                    resultados medibles y sostenibles
+                    innovative and sustainable transport solutions
                   </span>
                   .
                 </p>
+                <div>
+                  <span className="text-[#4ecca3] text-sm font-medium tracking-wider uppercase mb-3 block">
+                    our values
+                  </span>
+                  <p className="font-light">
+                    Our values are rooted in reliability, integrity, and a
+                    strong commitment to our customers, while continuously
+                    striving for improvement in everything we do.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </motion.div>

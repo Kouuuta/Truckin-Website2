@@ -33,7 +33,7 @@ const Hero = () => {
         className={`min-h-screen flex items-center justify-center px-6 md:px-12 pt-20 relative overflow-hidden transition-colors duration-300 ${
           isDarkMode
             ? "bg-gradient-to-br from-gray-900 via-black to-gray-800"
-            : "bg-gradient-to-br from-zinc-300 via-white to-zinc-200"
+            : "bg-gradient-to-br from-zinc-400 via-white to-zinc-300"
         }`}
       >
         {/* Subtle animated glow effects */}
@@ -134,8 +134,10 @@ const Hero = () => {
                 isDarkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Una agencia de performance enfocada en aumentar tus ventas y
-              mejorar tu margen de contribución
+              We are committed to being your trusted partner in logistics,
+              offering dependable trucking services with a strong focus on
+              customer satisfaction. With every delivery, we aim to support your
+              growth and ensure peace of mind.
             </p>
           </motion.div>
 
@@ -152,7 +154,7 @@ const Hero = () => {
           >
             {/* Primary button */}
             <motion.a
-              href="https://cal.com/valegarcia/intro"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-[#4ecca3] text-black font-medium rounded-xl 
@@ -162,30 +164,8 @@ const Hero = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <h6 className="font-medium tracking-tight">Hablemos</h6>
+              <h6 className="font-medium tracking-tight">WALA PA MALAGAY</h6>
             </motion.a>
-
-            {/* Secondary button */}
-            <motion.button
-              onClick={() => {
-                const element = document.querySelector("#about");
-                if (element) {
-                  element.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }
-              }}
-              className={`px-8 py-4 font-medium rounded-xl shadow-lg backdrop-blur-sm transition-all duration-300 cursor-pointer ${
-                isDarkMode
-                  ? "bg-gray-800/60 text-white border border-gray-700/50 hover:bg-gray-700/60"
-                  : "bg-gray-100/60 text-black border border-gray-300/50 hover:bg-gray-200/60"
-              }`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <h6 className="font-medium tracking-tight">Ver Portafolio</h6>
-            </motion.button>
           </motion.div>
         </div>
 

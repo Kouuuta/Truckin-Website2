@@ -5,6 +5,7 @@ import About from "./components/About";
 import Clients from "./components/Clients";
 import Team from "./components/Team";
 import Contacts from "./components/Contacts";
+import Footer from "./components/Footer";
 
 export function App() {
   return (
@@ -18,6 +19,7 @@ export function App() {
           <Team />
           <Contacts />
         </main>
+        <Footer />
       </div>
     </ThemeProvider>
   );
