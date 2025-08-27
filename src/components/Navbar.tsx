@@ -7,7 +7,7 @@ const Navbar = () => {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScroll, setLastScroll] = useState(0);
   const [menu, setMenu] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState<any>(null);
   const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -33,15 +33,43 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
 
-  // Smooth scroll function
+  // Robust scroll that accounts for a fixed header
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({
+    try {
+      const element = document.querySelector(href) as HTMLElement | null;
+      if (!element) return;
+
+      // compute header height dynamically so offset stays correct across breakpoints
+      const headerEl = document.querySelector("header") as HTMLElement | null;
+      const headerOffset = headerEl ? headerEl.clientHeight + 8 : 80;
+
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
         behavior: "smooth",
-        block: "start",
       });
+    } catch (err) {
+      // fail silently in production; useful to log in dev
+      if (process.env.NODE_ENV !== "production") {
+        // eslint-disable-next-line no-console
+        console.warn("scrollToSection error:", err);
+      }
     }
+  };
+
+  // Mobile handler: close menu first (so overlay is removed), then scroll after exit animation
+  const handleMobileNavClick = (href: string) => {
+    // close mobile menu first
+    setMenu(false);
+
+    // Delay must be >= exit animation duration used in the mobile menu (0.3s). Add a small buffer.
+    const waitMs = 320;
+    setTimeout(() => {
+      scrollToSection(href);
+    }, waitMs);
   };
 
   const navItems = [
@@ -119,6 +147,7 @@ const Navbar = () => {
             {/* Dark mode toggle */}
             <motion.button
               onClick={toggleTheme}
+              aria-label="Toggle theme"
               className={`p-2 rounded-full transition-colors duration-300 ${
                 isDarkMode
                   ? "text-yellow-400 hover:bg-white/10"
@@ -153,6 +182,7 @@ const Navbar = () => {
             {/* Mobile menu button */}
             <motion.button
               onClick={() => setMenu(!menu)}
+              aria-label="Toggle mobile menu"
               className={`lg:hidden p-2 rounded-full transition-colors ${
                 isDarkMode ? "hover:bg-white/10" : "hover:bg-gray-100"
               }`}
@@ -218,8 +248,8 @@ const Navbar = () => {
                   >
                     <button
                       onClick={() => {
-                        scrollToSection(item.href);
-                        setMenu(false);
+                        // close menu, wait for animation, then scroll
+                        handleMobileNavClick(item.href);
                       }}
                       className={`block text-xl font-medium py-2 transition-colors hover:text-[#4ecca3] cursor-pointer text-left ${
                         isDarkMode ? "text-white" : "text-black"
@@ -237,8 +267,7 @@ const Navbar = () => {
                 >
                   <button
                     onClick={() => {
-                      scrollToSection("#contact");
-                      setMenu(false);
+                      handleMobileNavClick("#contact");
                     }}
                     className="inline-flex items-center px-6 py-3 bg-[#4ecca3] text-black rounded-full font-semibold"
                   >
