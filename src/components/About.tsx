@@ -298,11 +298,37 @@ const About = () => {
                   <div className="h-full flex flex-col justify-center relative">
                     {/* Decorative accent */}
                     <motion.div
-                      className="absolute top-6 right-6 text-[#4ecca3]/20 text-6xl font-serif"
-                      animate={{ rotate: [0, 5, 0] }}
-                      transition={{ duration: 4, repeat: Infinity }}
+                      className="absolute top-6 right-6 text-[#4ecca3]/30"
+                      animate={{ rotate: [0, 10, 0] }}
+                      transition={{ duration: 6, repeat: Infinity }}
                     >
-                      "{index + 1}"
+                      {index === 0 && (
+                        <motion.img
+                          src="/mission.png"
+                          alt="Mission"
+                          className="w-12 h-12 opacity-50"
+                          animate={{ rotate: [0, 10, 0] }}
+                          transition={{ duration: 6, repeat: Infinity }}
+                        />
+                      )}
+                      {index === 1 && (
+                        <motion.img
+                          src="/vision.png"
+                          alt="Vision"
+                          className="w-12 h-12 opacity-50"
+                          animate={{ rotate: [0, 10, 0] }}
+                          transition={{ duration: 6, repeat: Infinity }}
+                        />
+                      )}
+                      {index === 2 && (
+                        <motion.img
+                          src="/values.png"
+                          alt="Values"
+                          className="w-12 h-12 opacity-50"
+                          animate={{ rotate: [0, 10, 0] }}
+                          transition={{ duration: 6, repeat: Infinity }}
+                        />
+                      )}
                     </motion.div>
 
                     <motion.span
@@ -311,7 +337,7 @@ const About = () => {
                       animate={{ x: activeCard === index ? 0 : -20 }}
                       transition={{ delay: 0.2 }}
                     >
-                      ━━━ {card.accent} ━━━
+                      -{card.accent}-
                     </motion.span>
 
                     <motion.h4
