@@ -64,8 +64,7 @@ const Footer = () => {
                 isDarkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Transformamos data en resultados extraordinarios. Una agencia de
-              performance enfocada en maximizar tu ROI y crecimiento sostenible.
+              Delivering excellence in transportation and logistics solutions.
             </p>
           </div>
 

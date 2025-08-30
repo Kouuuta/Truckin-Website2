@@ -1,18 +1,10 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useRef, useEffect, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 
 const Clients = () => {
   const { isDarkMode } = useTheme();
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const titleY = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const carouselX = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   const [headerRef, headerInView] = useInView({
     triggerOnce: true,
@@ -31,14 +23,18 @@ const Clients = () => {
     {
       id: 2,
       name: "Jollibee",
-      image: "Jollibee.png",
+      image: "/Jollibee.png",
     },
     {
       id: 3,
       name: "McDonalds",
-      image: "McDonalds.png",
+      image: "/McDonalds.png",
     },
-    { id: 4, name: "H&M", image: "H&M.png" },
+    {
+      id: 4,
+      name: "H&M",
+      image: "/H&M.jpg",
+    },
   ];
 
   const duplicatedClients = [...clients, ...clients, ...clients];
@@ -81,25 +77,14 @@ const Clients = () => {
         isDarkMode ? "bg-black" : "bg-white"
       }`}
       id="clients"
-      ref={containerRef}
     >
-      {/* Floating geometric elements */}
-      <motion.div
-        className="absolute top-32 right-20 w-2 h-2 bg-[#4ecca3] rounded-full opacity-30"
-        style={{ y: titleY }}
-      />
-      <motion.div
-        className="absolute bottom-40 left-10 w-1 h-16 bg-gradient-to-t from-[#4ecca3]/20 to-transparent"
-        style={{ y: useTransform(scrollYProgress, [0, 1], [30, -80]) }}
-      />
+      {/* Simplified static decorative elements */}
+      <div className="absolute top-32 right-20 w-2 h-2 bg-[#4ecca3] rounded-full opacity-30" />
+      <div className="absolute bottom-40 left-10 w-1 h-16 bg-gradient-to-t from-[#4ecca3]/20 to-transparent" />
 
       <div className="container mx-auto max-w-7xl relative z-10">
         {/* Header Section */}
-        <motion.div
-          className="text-center mb-20"
-          ref={headerRef}
-          style={{ y: titleY }}
-        >
+        <motion.div className="text-center mb-20" ref={headerRef}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={
@@ -203,10 +188,21 @@ const Clients = () => {
 
                     {/* Content Container */}
                     <div className="relative z-10 h-full flex flex-col items-center justify-center p-8">
-                      {/* Placeholder for client logo */}
-                      <div className="w-64 h-64 bg-gradient-to-br from-[#4ecca3]/20 to-[#4ecca3]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <div className="text-4xl font-light text-[#4ecca3]">
-                          {client.name.split(" ")[1]}
+                      {/* Client Logo */}
+                      <div className="w-64 h-64 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <img
+                          src={client.image}
+                          alt={`${client.name} logo`}
+                          className="max-w-full max-h-full object-contain filter brightness-110"
+                          onError={(e) => {
+                            // Fallback if image fails to load
+                            e.target.style.display = "none";
+                            e.target.nextElementSibling.style.display = "flex";
+                          }}
+                        />
+                        {/* Fallback placeholder */}
+                        <div className="w-full h-full bg-gradient-to-br from-[#4ecca3]/20 to-[#4ecca3]/10 rounded-2xl items-center justify-center text-4xl font-light text-[#4ecca3] hidden">
+                          {client.name.charAt(0)}
                         </div>
                       </div>
 
